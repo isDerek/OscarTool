@@ -30,19 +30,19 @@ SOURCES += \
         oscartool.cpp \
     uartdebug.cpp \
     socketdebug.cpp \
-    exuart.cpp
+    multiuartsend.cpp
 
 HEADERS += \
         oscartool.h \
     uartdebug.h \
     socketdebug.h \
-    exuart.h
+    multiuartsend.h
 
 FORMS += \
         oscartool.ui \
     uartdebug.ui \
     socketdebug.ui \
-    exuart.ui
+    multiuartsend.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

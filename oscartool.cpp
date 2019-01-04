@@ -16,6 +16,7 @@ OscarTool::~OscarTool()
 void OscarTool::on_uartDebug_clicked()
 {
 //    this->hide();
+    UartDebug *uartdebug = new UartDebug; // 点击打开多个窗口
     uartdebug->show();
 }
 

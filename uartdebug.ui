@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>868</width>
-    <height>625</height>
+    <height>636</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,35 +15,6 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_4">
-    <item row="1" column="0">
-     <widget class="QGroupBox" name="groupBox_4">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>100</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>接收设置</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_5">
-       <item>
-        <widget class="QCheckBox" name="HexReceiveBtn">
-         <property name="text">
-          <string>16 进制显示</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="viewSendBtn">
-         <property name="text">
-          <string>显示发送</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
     <item row="0" column="0">
      <widget class="QGroupBox" name="groupBox">
       <property name="maximumSize">
@@ -210,6 +181,128 @@
       </layout>
      </widget>
     </item>
+    <item row="0" column="2" rowspan="2">
+     <widget class="QGroupBox" name="groupBox_6">
+      <property name="maximumSize">
+       <size>
+        <width>150</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>扩展串口</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QToolBox" name="toolBox">
+         <property name="currentIndex">
+          <number>0</number>
+         </property>
+         <widget class="QWidget" name="page">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>126</width>
+            <height>196</height>
+           </rect>
+          </property>
+          <attribute name="label">
+           <string>ZigBee</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QPushButton" name="permitJoinBtn">
+             <property name="text">
+              <string>允许入网</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="lightOFF">
+             <property name="text">
+              <string>关灯</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="page_2">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>126</width>
+            <height>196</height>
+           </rect>
+          </property>
+          <attribute name="label">
+           <string>AT 命令</string>
+          </attribute>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QGroupBox" name="groupBox_4">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>接收设置</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="QCheckBox" name="HexReceiveBtn">
+         <property name="text">
+          <string>16 进制显示</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="viewSendBtn">
+         <property name="text">
+          <string>显示发送</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="3" column="0">
+     <widget class="QGroupBox" name="groupBox_7">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="title">
+       <string>辅助</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <widget class="QPushButton" name="ClearRecvBtn">
+         <property name="text">
+          <string>清空接收区</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="ClearSendBtn">
+         <property name="text">
+          <string>清空发送区</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
     <item row="2" column="0">
      <widget class="QGroupBox" name="groupBox_5">
       <property name="maximumSize">
@@ -261,7 +354,7 @@
       </layout>
      </widget>
     </item>
-    <item row="0" column="2" rowspan="3">
+    <item row="0" column="1" rowspan="3">
      <widget class="QGroupBox" name="groupBox_2">
       <property name="title">
        <string>串口数据接收</string>
@@ -273,100 +366,7 @@
       </layout>
      </widget>
     </item>
-    <item row="3" column="0">
-     <widget class="QGroupBox" name="groupBox_7">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>100</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>辅助</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_4">
-       <item>
-        <widget class="QPushButton" name="ClearRecvBtn">
-         <property name="text">
-          <string>清空接收区</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="ClearSendBtn">
-         <property name="text">
-          <string>清空发送区</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="3" rowspan="2">
-     <widget class="QGroupBox" name="groupBox_6">
-      <property name="maximumSize">
-       <size>
-        <width>150</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="title">
-       <string>扩展串口</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <widget class="QToolBox" name="toolBox">
-         <property name="currentIndex">
-          <number>0</number>
-         </property>
-         <widget class="QWidget" name="page">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>126</width>
-            <height>223</height>
-           </rect>
-          </property>
-          <attribute name="label">
-           <string>ZigBee</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
-           <item>
-            <widget class="QPushButton" name="permitJoinBtn">
-             <property name="text">
-              <string>允许入网</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="lightOFF">
-             <property name="text">
-              <string>关灯</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="page_2">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>126</width>
-            <height>223</height>
-           </rect>
-          </property>
-          <attribute name="label">
-           <string>AT 命令</string>
-          </attribute>
-         </widget>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="3" column="2">
+    <item row="3" column="1">
      <widget class="QGroupBox" name="groupBox_3">
       <property name="maximumSize">
        <size>
@@ -378,15 +378,22 @@
        <string>串口数据发送</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0">
-        <widget class="QTextEdit" name="SendDataEdt"/>
-       </item>
        <item row="0" column="1">
         <widget class="QPushButton" name="SendBtn">
          <property name="text">
           <string>发送</string>
          </property>
         </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="multiSendBtn">
+         <property name="text">
+          <string>多项发送</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" rowspan="2">
+        <widget class="QTextEdit" name="SendDataEdt"/>
        </item>
       </layout>
      </widget>
@@ -402,9 +409,88 @@
      <height>26</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menu_F">
+    <property name="title">
+     <string>文件(&amp;F)</string>
+    </property>
+    <addaction name="action_New"/>
+    <addaction name="separator"/>
+    <addaction name="action_Exit"/>
+   </widget>
+   <widget class="QMenu" name="menu_E">
+    <property name="title">
+     <string>编辑(&amp;E)</string>
+    </property>
+    <addaction name="action_Play"/>
+    <addaction name="action_Pause"/>
+   </widget>
+   <addaction name="menu_F"/>
+   <addaction name="menu_E"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="action_New"/>
+   <addaction name="separator"/>
+   <addaction name="action_Play"/>
+   <addaction name="action_Pause"/>
+  </widget>
+  <action name="action_New">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/myImages/images/filenew.png</normaloff>:/myImages/images/filenew.png</iconset>
+   </property>
+   <property name="text">
+    <string>新建(&amp;N)</string>
+   </property>
+   <property name="statusTip">
+    <string/>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="action_Exit">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/myImages/images/exit.png</normaloff>:/myImages/images/exit.png</iconset>
+   </property>
+   <property name="text">
+    <string>退出(&amp;X)</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="action_Play">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/myImages/images/gtk-media-play-ltr.png</normaloff>:/myImages/images/gtk-media-play-ltr.png</iconset>
+   </property>
+   <property name="text">
+    <string>开始</string>
+   </property>
+  </action>
+  <action name="action_Pause">
+   <property name="icon">
+    <iconset resource="images.qrc">
+     <normaloff>:/myImages/images/gtk-media-pause.png</normaloff>:/myImages/images/gtk-media-pause.png</iconset>
+   </property>
+   <property name="text">
+    <string>暂停</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="images.qrc"/>
+ </resources>
  <connections/>
 </ui>

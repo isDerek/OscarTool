@@ -2,5 +2,10 @@
     <qresource prefix="/myImages">
         <file>images/close.png</file>
         <file>images/run.png</file>
+        <file>images/filenew.png</file>
+        <file>images/exit.png</file>
+        <file>images/gtk-media-pause.png</file>
+        <file>images/gtk-media-play-ltr.png</file>
+        <file>images/gtk-media-stop.png</file>
     </qresource>
 </RCC>

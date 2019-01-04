@@ -16,13 +16,15 @@ UartDebug::UartDebug(QWidget *parent) :
     m_nRecvBytes = 0;
     m_nSendBytes = 0;
     m_bOpen = false;
+    permitRecData = true;
     m_nReadBuffSize = 64;
-    m_serial = new QSerialPort;
+//    m_serial = new QSerialPort;
     rfSerialPortTmr = new QTimer;
     resendTimer = new QTimer;
     rtcTimer = new QTimer;
     InitStatusBar();
     InitCommCmb();
+    ui->RecvDataEdt->setReadOnly(true);
     // 自动重发定时器
     connect(resendTimer, SIGNAL(timeout()), this, SLOT(on_SendBtn_clicked()));
     // 实时时间
@@ -32,9 +34,10 @@ UartDebug::UartDebug(QWidget *parent) :
     connect(rfSerialPortTmr,SIGNAL(timeout()),this,SLOT(rfSerialPort()));
     rfSerialPortTmr->start(1000);
     ui->OnOffBtn->setIcon(QIcon(":/myImages/images/run.png"));
-    ui->RecvDataEdt->setReadOnly(true);
     // 捕捉接收信号定时器
     connect(m_serial, SIGNAL(readyRead()), this, SLOT(slot_RecvPortData()));
+    // 接收多项发送的信号处理
+    connect(multiUartSend, SIGNAL(sendMultiData(QByteArray)), SLOT(receiveMultiData(QByteArray)));
 }
 
 void UartDebug::timerUpdate()
@@ -47,7 +50,9 @@ void UartDebug::timerUpdate()
 // 刷新串口处理函数
 void UartDebug::rfSerialPort()
 {
+    // 刷新串口，动态监测串口
     SetPortNumCmb();
+    // 监测串口是否被拔出
     handleSerialError(m_serial->error());
 }
 // 检测到 USB 设备被溢出，关闭串口，并弹出提示
@@ -437,17 +442,13 @@ void UartDebug::slot_RecvPortData()
        }
     }
     qDebug() << bytes;
-    if(!bytes.isEmpty())
+    if(!bytes.isEmpty()&& permitRecData)
     {
         QString strRecv = QString::fromLocal8Bit(bytes);
         ui->RecvDataEdt->insertPlainText(strRecv);
         ui->RecvDataEdt->moveCursor(QTextCursor::End);//保证 Text 数据不会自动换行
         m_nRecvBytes += bytes.count();
         SetRecvBytes();
-    }
-    else
-    {
-        ui->RecvDataEdt->setText(tr("接收数据出错!"));
     }
 }
 // 发送数据，写串口
@@ -508,10 +509,20 @@ void UartDebug::on_SendBtn_clicked()
                SendBytes.insert(3*i-1," ");
            }
         }
+        SendBytes.insert(0,"SendData:");
+        SendBytes.append("\n\r");
         QString strRecv = QString::fromLocal8Bit(SendBytes);
         ui->RecvDataEdt->insertPlainText(strRecv);
         ui->RecvDataEdt->moveCursor(QTextCursor::End);//保证 Text 数据不会自动换行
-        m_nRecvBytes += SendBytes.count();
+        if(ui->HexReceiveBtn->checkState())
+        {
+            m_nRecvBytes += (SendBytes.count()-11)/3;//去掉添加的多余字符,16 进制 3 个字符为一组
+        }
+        else
+        {
+            m_nRecvBytes += SendBytes.count()-11;//去掉添加的多余字符
+        }
+
         SetRecvBytes();
     }
 
@@ -617,10 +628,12 @@ void UartDebug::on_lightOFF_clicked()
                SendBytes.insert(3*i-1," ");
            }
         }
+        SendBytes.insert(0,"SendData:");
+        SendBytes.append("\n\r");
         QString strRecv = QString::fromLocal8Bit(SendBytes);
         ui->RecvDataEdt->insertPlainText(strRecv);
         ui->RecvDataEdt->moveCursor(QTextCursor::End);//保证 Text 数据不会自动换行
-        m_nRecvBytes += SendBytes.count();
+        m_nRecvBytes += (SendBytes.count()-11)/3; //去掉添加的多余字符,16 进制 3 个字符为一组
         SetRecvBytes();
     }
 }
@@ -656,10 +669,90 @@ void UartDebug::on_permitJoinBtn_clicked()
                SendBytes.insert(3*i-1," ");
            }
         }
+        SendBytes.insert(0,"SendData:");
+        SendBytes.append("\n\r");
         QString strRecv = QString::fromLocal8Bit(SendBytes);
         ui->RecvDataEdt->insertPlainText(strRecv);
         ui->RecvDataEdt->moveCursor(QTextCursor::End);//保证 Text 数据不会自动换行
-        m_nRecvBytes += SendBytes.count();
+        m_nRecvBytes += (SendBytes.count()-11)/3;//去掉添加的多余字符,16 进制 3 个字符为一组
+        SetRecvBytes();
+    }
+}
+// 新建窗口
+void UartDebug::on_action_New_triggered()
+{
+    UartDebug *uartdebug = new UartDebug;
+    uartdebug->move(100,100); // 新建的窗口不和原来窗口重合
+    uartdebug->show();
+}
+
+void UartDebug::on_action_Pause_triggered()
+{
+    permitRecData = false;
+    ui->action_Pause->setEnabled(false);
+    ui->action_Play->setEnabled(true);
+}
+
+void UartDebug::on_action_Play_triggered()
+{
+    permitRecData = true;
+    ui->action_Play->setEnabled(false);
+    ui->action_Pause->setEnabled(true);
+}
+
+void UartDebug::on_multiSendBtn_clicked()
+{
+    multiUartSend->show();
+}
+
+void UartDebug::receiveMultiData(QByteArray data)
+{
+    // 串口未打开
+    if(!m_bOpen)
+    {
+        m_SerStateLbl->setText(tr("串口状态：串口未打开，发送失败"));
+        return;
+    }
+    QByteArray SendBytes = data;
+    // 如果发送窗口为空，则不发送
+    if(SendBytes == "")
+    {
+        return;
+    }
+    if(!SendBytes.isEmpty())
+    {
+//        qDebug("发送字节："+SendBytes);
+        m_serial->write(SendBytes);
+        m_nSendBytes += SendBytes.count();
+        SetSendBytes();
+    }
+    // 发送按钮，显示发送,必须置于函数最后端，保证逻辑正确
+    if(ui->viewSendBtn->checkState())
+    {
+        // 发送按钮，16进制接收显示状态
+        if(ui->HexReceiveBtn->checkState())
+        {
+           SendBytes = SendBytes.toHex().toUpper().simplified();
+           int len = SendBytes.count()/2;
+           for(int i = 1; i<len+1; i++)
+           {
+               SendBytes.insert(3*i-1," ");
+           }
+        }
+        SendBytes.insert(0,"SendData:");
+        SendBytes.append("\n\r");
+        QString strRecv = QString::fromLocal8Bit(SendBytes);
+        ui->RecvDataEdt->insertPlainText(strRecv);
+        ui->RecvDataEdt->moveCursor(QTextCursor::End);//保证 Text 数据不会自动换行
+        if(ui->HexReceiveBtn->checkState())
+        {
+            m_nRecvBytes += (SendBytes.count()-11)/3;//去掉添加的多余字符,16 进制 3 个字符为一组
+        }
+        else
+        {
+            m_nRecvBytes += SendBytes.count()-11;//去掉添加的多余字符
+        }
+
         SetRecvBytes();
     }
 }
