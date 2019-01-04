@@ -465,15 +465,11 @@ void UartDebug::on_SendBtn_clicked()
     {
         return;
     }
-    // 发送按钮，16进制接收显示状态
-    if(ui->HexReceiveBtn->checkState())
+    // 发送按钮，16进制接收显示状态，在接收做处理
+    if(ui->HexSendBtn->checkState())
     {
-       SendBytes = SendBytes.toHex().toUpper().simplified();
-       int len = SendBytes.count()/2;
-       for(int i = 1; i<len+1; i++)
-       {
-           SendBytes.insert(3*i-1," ");
-       }
+       QByteArray HexBytes = ui->SendDataEdt->toPlainText().toLocal8Bit();
+       StringToHex(HexBytes,SendBytes);
     }
     // 发送按钮，自动重发
     if(ui->autoResendBtn->checkState())
@@ -492,21 +488,33 @@ void UartDebug::on_SendBtn_clicked()
     {
         SendBytes.append("\n\r");
     }
+    if(!SendBytes.isEmpty())
+    {
+//        qDebug("发送字节："+SendBytes);
+        m_serial->write(SendBytes);
+        m_nSendBytes += SendBytes.count();
+        SetSendBytes();
+    }
     // 发送按钮，显示发送,必须置于函数最后端，保证逻辑正确
     if(ui->viewSendBtn->checkState())
     {
+        // 发送按钮，16进制接收显示状态
+        if(ui->HexReceiveBtn->checkState())
+        {
+           SendBytes = SendBytes.toHex().toUpper().simplified();
+           int len = SendBytes.count()/2;
+           for(int i = 1; i<len+1; i++)
+           {
+               SendBytes.insert(3*i-1," ");
+           }
+        }
         QString strRecv = QString::fromLocal8Bit(SendBytes);
         ui->RecvDataEdt->insertPlainText(strRecv);
         ui->RecvDataEdt->moveCursor(QTextCursor::End);//保证 Text 数据不会自动换行
         m_nRecvBytes += SendBytes.count();
         SetRecvBytes();
     }
-    if(!SendBytes.isEmpty())
-    {
-        m_serial->write(SendBytes);
-        m_nSendBytes += SendBytes.count();
-        SetSendBytes();
-    }
+
 }
 
 // 函数重写
@@ -539,13 +547,12 @@ char UartDebug::ConvertHexChar(char ch)
 
 void UartDebug::StringToHex(QString str, QByteArray &sendData)
 {
-    int hexdata,lowhexdata;
+    char hexdata,lowhexdata;
     int hexdatalen = 0;
     int len = str.length();
     sendData.resize(len/2);
     char lstr,hstr;
     for (int i=0; i<len;) {
-//        qDebug()<< str[i];
         hstr=str[i].toLatin1();
         if(hstr == ' ')
         {
@@ -569,14 +576,15 @@ void UartDebug::StringToHex(QString str, QByteArray &sendData)
         }
         else
         {
-            hexdata = hexdata * 16 + lowhexdata;
+            hexdata =  hexdata *16 + lowhexdata;
         }
         i++;
-
-        sendData[hexdatalen] = (char)hexdata;
+//        qDebug("转化为16进制数：%d",hexdata);
+        sendData[hexdatalen] = hexdata;
         hexdatalen++;
     }
     sendData.resize(hexdatalen);
+//    qDebug()<<sendData.length();
 }
 
 void UartDebug::on_lightOFF_clicked()
@@ -590,7 +598,6 @@ void UartDebug::on_lightOFF_clicked()
     QByteArray lightOFFBytes = "0102109202100216930214FFFC02110211021003";// 关灯
     QByteArray SendBytes;
     StringToHex(lightOFFBytes,SendBytes);
-    qDebug()<<SendBytes;
     if(!SendBytes.isEmpty())
     {
         m_serial->write(SendBytes);
@@ -630,7 +637,6 @@ void UartDebug::on_permitJoinBtn_clicked()
     QByteArray lightOFFBytes = "01021049021002147EFFFC30021003";// 关灯
     QByteArray SendBytes;
     StringToHex(lightOFFBytes,SendBytes);
-    qDebug()<<SendBytes;
     if(!SendBytes.isEmpty())
     {
         m_serial->write(SendBytes);
