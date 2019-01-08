@@ -3,8 +3,7 @@
 
 #include <QMainWindow>
 #include "uartdebug.h"
-#include "socketdebug.h"
-
+#include "tcpserver.h"
 namespace Ui {
 class OscarTool;
 }
@@ -19,11 +18,11 @@ public:
 
 public:
     Ui::OscarTool *ui;
-    UartDebug *uartdebug = new UartDebug;
-    SocketDebug *socketdebug = new SocketDebug;
+    UartDebug *uartdebug;
+    TCPServer *tcpserver;
 private slots:
-    void on_uartDebug_clicked();
-    void on_socketDebug_clicked();
+    void on_uartDebugBtn_clicked();
+    void on_TCPServerBtn_clicked();
 };
 
 #endif // OSCARTOOL_H

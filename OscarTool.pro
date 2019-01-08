@@ -6,6 +6,7 @@
 
 QT       += core gui
 QT       += serialport
+QT       += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -29,20 +30,23 @@ SOURCES += \
         main.cpp \
         oscartool.cpp \
     uartdebug.cpp \
-    socketdebug.cpp \
-    multiuartsend.cpp
+    multiuartsend.cpp \
+    creattcpserverdialog.cpp \
+    tcpserver.cpp
 
 HEADERS += \
         oscartool.h \
     uartdebug.h \
-    socketdebug.h \
-    multiuartsend.h
+    multiuartsend.h \
+    creattcpserverdialog.h \
+    tcpserver.h
 
 FORMS += \
         oscartool.ui \
     uartdebug.ui \
-    socketdebug.ui \
-    multiuartsend.ui
+    multiuartsend.ui \
+    creattcpserverdialog.ui \
+    tcpserver.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

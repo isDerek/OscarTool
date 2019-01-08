@@ -13,14 +13,14 @@ OscarTool::~OscarTool()
     delete ui;
 }
 
-void OscarTool::on_uartDebug_clicked()
+void OscarTool::on_uartDebugBtn_clicked()
 {
-//    this->hide();
     UartDebug *uartdebug = new UartDebug; // 点击打开多个窗口
     uartdebug->show();
 }
 
-void OscarTool::on_socketDebug_clicked()
+void OscarTool::on_TCPServerBtn_clicked()
 {
-    socketdebug->show();
+    TCPServer *tcpserver = new TCPServer;
+    tcpserver->show();
 }

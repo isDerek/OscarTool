@@ -258,7 +258,6 @@ void UartDebug::SetStreamCmb()
 void UartDebug::on_baudRCmb_currentIndexChanged(int index)
 {
     int nCount = ui->baudRCmb->count();;
-    // 要做修改，用最新的写法
     if(index == nCount - 1)
     {
         ui->baudRCmb->setEditable(TRUE);
@@ -530,7 +529,7 @@ void UartDebug::on_SendBtn_clicked()
 
 // 函数重写
 
-// 串口关闭时间，如果窗口关闭前串口未关闭，则关闭串口
+// 串口关闭事件，如果窗口关闭前串口未关闭，则关闭串口
 void UartDebug::closeEvent(QCloseEvent *event)
 {
     if(m_serial->isOpen())
