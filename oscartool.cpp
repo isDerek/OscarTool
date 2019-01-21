@@ -15,12 +15,12 @@ OscarTool::~OscarTool()
 
 void OscarTool::on_uartDebugBtn_clicked()
 {
-    UartDebug *uartdebug = new UartDebug; // 点击打开多个窗口
+    uartdebug = new UartDebug; // 点击打开多个窗口
     uartdebug->show();
 }
 
 void OscarTool::on_TCPServerBtn_clicked()
 {
-    TCPServer *tcpserver = new TCPServer;
+    tcpserver = new TCPServer;
     tcpserver->show();
 }

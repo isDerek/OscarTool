@@ -18,7 +18,7 @@ UartDebug::UartDebug(QWidget *parent) :
     m_bOpen = false;
     permitRecData = true;
     m_nReadBuffSize = 64;
-//    m_serial = new QSerialPort;
+
     rfSerialPortTmr = new QTimer;
     resendTimer = new QTimer;
     rtcTimer = new QTimer;
@@ -61,7 +61,7 @@ void UartDebug::handleSerialError(QSerialPort::SerialPortError error)
 //    qDebug() << error;
     if(error == QSerialPort::ResourceError || error == QSerialPort::PermissionError)
     {
-        QMessageBox::critical(this,tr("Error"),"串口连接中断，请检查是否正确连接");
+//        QMessageBox::critical(this,tr("Error"),"串口连接中断，请检查是否正确连接");
         if(m_serial->isOpen())
         {
             m_serial->clearError();

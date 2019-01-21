@@ -14,31 +14,57 @@
    <string>OscarTool</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="uartDebugBtn">
+   <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>40</y>
-      <width>93</width>
-      <height>28</height>
+      <x>20</x>
+      <y>60</y>
+      <width>131</width>
+      <height>101</height>
      </rect>
     </property>
-    <property name="text">
-     <string>uart</string>
+    <property name="title">
+     <string>串口工具</string>
     </property>
+    <widget class="QPushButton" name="uartDebugBtn">
+     <property name="geometry">
+      <rect>
+       <x>12</x>
+       <y>44</y>
+       <width>101</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>串口调试助手</string>
+     </property>
+    </widget>
    </widget>
-   <widget class="QPushButton" name="TCPServerBtn">
+   <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>100</y>
-      <width>93</width>
-      <height>28</height>
+      <x>20</x>
+      <y>200</y>
+      <width>131</width>
+      <height>80</height>
      </rect>
     </property>
-    <property name="text">
-     <string>TCP 服务器</string>
+    <property name="title">
+     <string>网络工具</string>
     </property>
+    <widget class="QPushButton" name="TCPServerBtn">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>93</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TCP 服务器</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
